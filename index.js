@@ -84,13 +84,13 @@ async function handleBody(body){
 if (!fs.existsSync('./blocked')){
     fs.mkdirSync('./blocked', { recursive: true });
 }
-console.log(process.argv[3] || 'http://localhost:3000');
-console.log(parseInt(process.argv[4]) || 3001);
+console.log(process.argv[2] || 'http://localhost:3000');
+console.log(parseInt(process.argv[3]) || 3001);
 
 createServer({
-	target: process.argv[3] || 'http://localhost:3000',
+	target: process.argv[2] || 'http://localhost:3000',
 	xfwd: true
-}, parseInt(process.argv[4]) || 3001);
+}, parseInt(process.argv[3]) || 3001);
 
 //dist(await phash(fs.readFileSync("./sample/60cb207248456845.webp")), await phash(fs.readFileSync("./sample/02b2f0736ee13993.jpg")))
 
