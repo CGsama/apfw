@@ -1,6 +1,10 @@
 WARNING:
 current full proxy still buggy, please only enable for the /inbox path in your nginx or cloudflare setting
 
+![image](https://github.com/CGsama/apfw/assets/15722562/fe05523f-1031-418d-ac01-8c5cb31a9d97)
+
+
+
 default setup is for misskey
 
 usage: node index.js http://127.0.0.1:3000 3001
