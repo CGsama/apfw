@@ -41,12 +41,15 @@ function createServer(proxyCfg, port) {
     req.body = await parseBody(req);
 	//console.log(req.url);
 	//console.log(req.body.toString());
-	let block = false;
-	if(req.url = "/inbox"){
-		block = await handleBody(req.body);
-	}
-    if (!res.headersSent && !block) {
-      proxyServer.web(req, res)
+	let block = await handleBody(req.body);
+
+    if (!res.headersSent) {
+		if(!block){
+      		proxyServer.web(req, res)
+		}else{
+			res.writeHead(406);
+			res.end();
+		}
     }
   }).listen(port)
 }
