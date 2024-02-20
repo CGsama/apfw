@@ -66,7 +66,8 @@ async function handleBody(body){
 				let hash = await phash(await sharp(input).png().toBuffer());
 				for(let i = 0; i < spams.length; i++) {
 					if(dist(hash, spams[i]) < 5){
-						console.log(`block ${url}`);
+						//console.log(`block ${url}`);
+						console.log(`block ${obj.object.id}`);
 						fs.writeFile(`./blocked/${process.hrtime.bigint()}.json`, JSON.stringify(obj, null, 2), ()=>{});
 						return true;
 					}
@@ -74,7 +75,8 @@ async function handleBody(body){
 			}
 		}
 	}catch(e){
-		console.log(body.toString());
+		//console.log(body.toString());
+		//console.log(e);
 		return false;
 	}
 }
