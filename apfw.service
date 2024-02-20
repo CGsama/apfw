@@ -1,0 +1,17 @@
+[Unit]
+Description=APFW firewall for activitypub
+
+[Service]
+Type=simple
+User=ubuntu
+ExecStart=/usr/bin/node index.js
+WorkingDirectory=/home/ubuntu/apfw
+Environment=""
+TimeoutSec=60
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=apfw
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
