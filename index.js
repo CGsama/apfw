@@ -84,6 +84,8 @@ async function handleBody(body){
 if (!fs.existsSync('./blocked')){
     fs.mkdirSync('./blocked', { recursive: true });
 }
+console.log(process.argv[3] || 'http://localhost:3000');
+console.log(parseInt(process.argv[4]) || 3001);
 
 createServer({
 	target: process.argv[3] || 'http://localhost:3000',
