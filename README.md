@@ -1,3 +1,11 @@
+default setup is for misskey
+
+usage: node index.js http://127.0.0.1:3000 3001
+
+first param is the backend, second is listen port
+
+
+
 git clone https://github.com/CGsama/apfw.git
 
 cd apfw

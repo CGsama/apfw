@@ -46,6 +46,7 @@ function createServer(proxyCfg, port) {
 		try{
 			block = await handleBody(req.body);
 		}catch(e){
+			console.log(req.body.toString());
 			console.log(e);
 		}
 	}
@@ -70,7 +71,7 @@ async function handleBody(body){
 			for(let i = 0; i < spams.length; i++) {
 				if(dist(hash, spams[i]) < 5){
 					console.log(`block ${url}`);
-					fs.writeFile(`./blocked/${process.hrtime.bigint()}`, JSON.stringify(obj, null, 2), ()=>{});
+					fs.writeFile(`./blocked/${process.hrtime.bigint()}.json`, JSON.stringify(obj, null, 2), ()=>{});
 					return true;
 				}
 			}
@@ -87,7 +88,7 @@ if (!fs.existsSync('./blocked')){
 createServer({
 	target: process.argv[3] || 'http://localhost:3000',
 	xfwd: true
-}, process.argv[4] || 3001);
+}, parseInt(process.argv[4]) || 3001);
 
 //dist(await phash(fs.readFileSync("./sample/60cb207248456845.webp")), await phash(fs.readFileSync("./sample/02b2f0736ee13993.jpg")))
 

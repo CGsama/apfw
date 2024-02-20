@@ -4,7 +4,7 @@ Description=APFW firewall for activitypub
 [Service]
 Type=simple
 User=ubuntu
-ExecStart=/usr/bin/node index.js
+ExecStart=/usr/bin/node index.js http://127.0.0.1:3000 3001
 WorkingDirectory=/home/ubuntu/apfw
 Environment=""
 TimeoutSec=60
