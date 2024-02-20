@@ -47,7 +47,7 @@ function createServer(proxyCfg, port) {
 		if(!block){
       		proxyServer.web(req, res)
 		}else{
-			res.writeHead(406);
+			res.writeHead(200);
 			res.end();
 		}
     }
