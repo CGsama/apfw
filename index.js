@@ -7,6 +7,7 @@ var phash = require("sharp-phash");
 var dist = require("sharp-phash/distance");
 var fs = require('fs');
 var process = require('process');
+var crypto = require('crypto');
 
 
 var exts = ["jpg","jpeg","gif","png","webp"];
@@ -71,7 +72,7 @@ async function handleBody(body){
 					if(dist(hash, spams[i]) < 5){
 						//console.log(`block ${url}`);
 						console.log(`block ${obj.object.id}`);
-						fs.writeFile(`./blocked/${process.hrtime.bigint()}.json`, JSON.stringify(obj, null, 2), ()=>{});
+						fs.writeFile(`./blocked/${obj.object.id ? crypto.createHash('md5').update(obj.object.id).digest('hex') : process.hrtime.bigint()}.json`, JSON.stringify(obj, null, 2), ()=>{});
 						return true;
 					}
 				}
