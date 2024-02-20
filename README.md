@@ -28,3 +28,8 @@ sudo systemctl enable apfw
 sudo systemctl start apfw
 
 sudo journalctl -u apfw.service
+
+
+poc:
+
+![image](https://github.com/CGsama/apfw/assets/15722562/96c9b921-dd30-4d19-9c8f-3f68f1064980)
