@@ -43,12 +43,7 @@ function createServer(proxyCfg, port) {
 	//console.log(req.body.toString());
 	let block = false;
 	if(req.url = "/inbox"){
-		try{
-			block = await handleBody(req.body);
-		}catch(e){
-			console.log(req.body.toString());
-			console.log(e);
-		}
+		block = await handleBody(req.body);
 	}
     if (!res.headersSent && !block) {
       proxyServer.web(req, res)
@@ -57,27 +52,31 @@ function createServer(proxyCfg, port) {
 }
 
 async function handleBody(body){
-	let obj = JSON.parse(body);
-	
-	let files = obj.object.attachment;
-	if(files.length > 0){
-		for(let i = 0; i < files.length; i++) {
-			if(!files[i].mediaType.toLowerCase().startsWith("image")){
-				continue;
-			}
-			let url = files[i].url;
-			let input = (await axios({ url: url, responseType: "arraybuffer" })).data;
-			let hash = await phash(await sharp(input).png().toBuffer());
-			for(let i = 0; i < spams.length; i++) {
-				if(dist(hash, spams[i]) < 5){
-					console.log(`block ${url}`);
-					fs.writeFile(`./blocked/${process.hrtime.bigint()}.json`, JSON.stringify(obj, null, 2), ()=>{});
-					return true;
+	try{
+		let obj = JSON.parse(body);
+		
+		let files = obj.object.attachment;
+		if(files.length > 0){
+			for(let i = 0; i < files.length; i++) {
+				if(!files[i].mediaType.toLowerCase().startsWith("image")){
+					continue;
+				}
+				let url = files[i].url;
+				let input = (await axios({ url: url, responseType: "arraybuffer" })).data;
+				let hash = await phash(await sharp(input).png().toBuffer());
+				for(let i = 0; i < spams.length; i++) {
+					if(dist(hash, spams[i]) < 5){
+						console.log(`block ${url}`);
+						fs.writeFile(`./blocked/${process.hrtime.bigint()}.json`, JSON.stringify(obj, null, 2), ()=>{});
+						return true;
+					}
 				}
 			}
 		}
+	}catch(e){
+		console.log(body.toString());
+		return false;
 	}
-	return false;
 }
 
 
