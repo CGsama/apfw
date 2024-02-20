@@ -1,5 +1,5 @@
 WARNING:
-current full proxy still buggy, please only enable for the /inbox path in your nginx or cloudflare setting
+current full proxy still buggy, you can try but if site become not accessable please only enable for the /inbox path in your nginx or cloudflare setting
 
 e.g. cloudlflare tunnel setup
 
