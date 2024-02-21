@@ -12,6 +12,7 @@ var crypto = require('crypto');
 
 var exts = ["jpg","jpeg","gif","png","webp"];
 var spams = [];
+var spamText = fs.readFileSync(`sample.txt`).toString().split("\n").map(x => x.trim().toLowerCase()).filter(x => x != "");
 
 Promise.all(fs.readdirSync("sample").filter(x => exts.includes(x.split(".").slice(-1)[0].toLowerCase())).map(x => phash(fs.readFileSync(`./sample/${x}`)))).then(x => {
 	spams = x;
@@ -71,11 +72,18 @@ async function handleBody(body){
 				for(let i = 0; i < spams.length; i++) {
 					if(dist(hash, spams[i]) < 5){
 						//console.log(`block ${url}`);
-						console.log(`block ${obj.object.id}`);
+						console.log(`block image ${obj.object.id}`);
 						fs.writeFile(`./blocked/${obj.object.id ? crypto.createHash('md5').update(obj.object.id).digest('hex') : process.hrtime.bigint()}.json`, JSON.stringify(obj, null, 2), ()=>{});
 						return true;
 					}
 				}
+			}
+		}
+		for(let i = 0; i < spamText.length; i++) {
+			if(obj.object.content.toLowerCase().includes(spamText[i])){
+				console.log(`block text ${obj.object.id}`);
+				fs.writeFile(`./blocked/${obj.object.id ? crypto.createHash('md5').update(obj.object.id).digest('hex') : process.hrtime.bigint()}.json`, JSON.stringify(obj, null, 2), ()=>{});
+				return true;
 			}
 		}
 	}catch(e){
